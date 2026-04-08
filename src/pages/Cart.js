@@ -3,12 +3,8 @@ import { CartContext } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 
 function Cart() {
-  const {
-    cartItems,
-    removeFromCart,
-    increaseQty,
-    decreaseQty,
-  } = useContext(CartContext);
+  const { cartItems, removeFromCart, increaseQty, decreaseQty } =
+    useContext(CartContext);
 
   const navigate = useNavigate();
 
@@ -18,102 +14,96 @@ function Cart() {
   );
 
   return (
-    <div style={{
-      minHeight: "100vh",
-      padding: "50px",
-      background: "linear-gradient(135deg,#0f0f1a,#1a1a2e)",
-      color: "white"
-    }}>
-      <h1 style={{
-        textAlign: "center",
-        marginBottom: "40px",
-        background: "linear-gradient(90deg,#00f5ff,#ff00ff)",
-        WebkitBackgroundClip: "text",
-        WebkitTextFillColor: "transparent"
-      }}>
-        Your Cart
-      </h1>
+    <div className="container-fluid py-5">
+      <div className="container">
 
-      {cartItems.length === 0 ? (
-        <h3 style={{ textAlign: "center" }}>Cart is Empty 🛒</h3>
-      ) : (
-        <div style={{ maxWidth: "800px", margin: "auto" }}>
-          {cartItems.map(item => (
-            <div key={item.id} style={{
-              background: "rgba(255,255,255,0.05)",
-              padding: "20px",
-              borderRadius: "15px",
-              marginBottom: "20px",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              boxShadow: "0 0 20px rgba(0,255,255,0.2)"
-            }}>
-              <div>
-                <h3>{item.name}</h3>
-                <p>₹{item.price}</p>
-              </div>
+        <div className="text-center mb-5">
+          <h1 className="fw-bold display-4" style={{ color: "#333" }}>
+            Your Cart
+          </h1>
+        </div>
 
-              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                <button onClick={() => decreaseQty(item.id)} style={qtyBtn}>−</button>
-                <span>{item.quantity}</span>
-                <button onClick={() => increaseQty(item.id)} style={qtyBtn}>+</button>
-              </div>
-
-              <h3>₹{item.price * item.quantity}</h3>
-
-              <button
-                onClick={() => removeFromCart(item.id)}
-                style={removeBtn}
-              >
-                Remove
-              </button>
-            </div>
-          ))}
-
-          <div style={{ textAlign: "center", marginTop: "30px" }}>
-            <h2>Total: ₹{totalPrice}</h2>
-
-            <button
-              onClick={() => navigate("/checkout")}
-              style={checkoutBtn}
-            >
-              Proceed to Checkout
+        {cartItems.length === 0 ? (
+          <div className="text-center py-5">
+            <h3 className="text-muted">Cart is Empty 🛒</h3>
+            <button className="btn btn-premium mt-3" onClick={() => navigate("/")}>
+              Continue Shopping
             </button>
           </div>
-        </div>
-      )}
+        ) : (
+          <div className="mx-auto" style={{ maxWidth: "900px" }}>
+
+            {cartItems.map((item) => (
+              <div
+                key={item.id}
+                className="card premium-card mb-4 border-0"
+              >
+                <div className="card-body p-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+                  <div className="d-flex align-items-center gap-4">
+                    <img 
+                      src={item.image} 
+                      alt={item.name} 
+                      loading="lazy"
+                      style={{ width: "80px", height: "80px", objectFit: "cover", borderRadius: "10px" }}
+                    />
+                    <div>
+                      <h5 className="fw-bold mb-1">{item.name}</h5>
+                      <p className="text-gradient-success fw-semibold mb-0">₹{item.price}</p>
+                    </div>
+                  </div>
+
+                  <div className="d-flex align-items-center gap-3 bg-light rounded-pill py-2 px-3 border" style={{ borderColor: "#ff6a00" }}>
+                    <button
+                      className="btn btn-sm rounded-circle"
+                      style={{ width: "32px", height: "32px", padding: 0, background: "#ff6a00", color: "white" }}
+                      onClick={() => decreaseQty(item.id)}
+                    >
+                      <i className="bi bi-dash fw-bold"></i>
+                    </button>
+
+                    <span className="fw-bold fs-5 px-2" style={{ color: "#333" }}>{item.quantity}</span>
+
+                    <button
+                      className="btn btn-sm rounded-circle"
+                      style={{ width: "32px", height: "32px", padding: 0, background: "#ff6a00", color: "white" }}
+                      onClick={() => increaseQty(item.id)}
+                    >
+                      <i className="bi bi-plus fw-bold"></i>
+                    </button>
+                  </div>
+
+                  <div className="text-end">
+                    <h4 className="fw-bold mb-2 text-gradient-success">
+                      ₹{item.price * item.quantity}
+                    </h4>
+                    <button
+                      className="btn btn-sm btn-outline-danger rounded-pill px-3"
+                      onClick={() => removeFromCart(item.id)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+
+                </div>
+              </div>
+            ))}
+
+            <div className="premium-card p-4 mt-5 text-center shadow-sm">
+              <h2 className="mb-4 fw-bold" style={{ color: "#333" }}>Total Amount: <span className="text-gradient-success">₹{totalPrice}</span></h2>
+              <button
+                className="btn btn-lg btn-premium px-5 rounded-pill shadow-sm"
+                onClick={() => navigate("/checkout")}
+              >
+                Proceed to Checkout
+              </button>
+            </div>
+
+          </div>
+        )}
+      </div>
     </div>
   );
 }
-
-const qtyBtn = {
-  padding: "5px 12px",
-  borderRadius: "50%",
-  border: "none",
-  background: "#00f5ff",
-  cursor: "pointer",
-  fontWeight: "bold"
-};
-
-const removeBtn = {
-  padding: "8px 15px",
-  borderRadius: "20px",
-  border: "none",
-  background: "#ff004c",
-  color: "white",
-  cursor: "pointer"
-};
-
-const checkoutBtn = {
-  marginTop: "20px",
-  padding: "12px 30px",
-  borderRadius: "30px",
-  border: "none",
-  background: "linear-gradient(90deg,#00f5ff,#ff00ff)",
-  color: "white",
-  fontWeight: "bold",
-  cursor: "pointer"
-};
 
 export default Cart;

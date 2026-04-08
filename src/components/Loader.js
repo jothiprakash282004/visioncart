@@ -2,16 +2,18 @@ import React from "react";
 
 function Loader() {
   return (
-    <div style={{
-      minHeight: "100vh",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      background: "#0f0f1a",
-      color: "#00f5ff",
-      fontSize: "30px"
-    }}>
-      Loading...
+    <div className="d-flex justify-content-center align-items-center vh-100 bg-dark">
+
+      <div className="text-center text-info">
+
+        <div className="spinner-border text-info mb-3" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+
+        <h4>Loading...</h4>
+
+      </div>
+
     </div>
   );
 }

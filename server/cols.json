@@ -1,0 +1,33 @@
+{
+  "user": [
+    {
+      "column_name": "id"
+    },
+    {
+      "column_name": "name"
+    },
+    {
+      "column_name": "email"
+    },
+    {
+      "column_name": "password"
+    }
+  ],
+  "orders": [
+    {
+      "column_name": "id"
+    },
+    {
+      "column_name": "user_id"
+    },
+    {
+      "column_name": "total_amount"
+    },
+    {
+      "column_name": "status"
+    },
+    {
+      "column_name": "created_at"
+    }
+  ]
+}

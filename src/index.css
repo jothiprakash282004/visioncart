@@ -1,19 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
 body {
   margin: 0;
-  font-family: "Poppins", sans-serif;
-  background: linear-gradient(135deg, #0f0f1a, #1a1a2e);
-  color: white;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: #f0f2f5; /* Light gray standard e-commerce background */
+  color: #333333; /* Dark gray text for readability */
+  min-height: 100vh;
 }
 
-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  cursor: pointer;
-  border-radius: 5px;
+/* Premium Card Styling -> Now Clean Flat Card */
+.premium-card {
+  background: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+  overflow: hidden;
 }
 
-button:hover {
-  background-color: #0056b3;
+.premium-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-color: #ff6a00;
+}
+
+/* Gradient Text -> Solid Text */
+.text-gradient {
+  color: #333333;
+  font-weight: 700;
+}
+
+.text-gradient-success {
+  color: #ff6a00; /* Price color */
+  font-weight: 700;
+}
+
+/* Primary Button (Formerly Premium Button) */
+.btn-premium {
+  background: #ff6a00;
+  border: 1px solid #ff6a00;
+  color: white;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+}
+
+.btn-premium:hover,
+.btn-premium:focus,
+.btn-premium:active {
+  background: #e65c00;
+  border-color: #e65c00;
+  color: white !important;
+}
+
+/* Form inputs */
+.form-control.premium-input {
+  background: #ffffff;
+  border: 2px solid #ff6a00;
+  color: #333333;
+  border-radius: 20px;
+  padding: 0.5rem 1.25rem;
+}
+
+.form-control.premium-input:focus {
+  background: #ffffff;
+  border-color: #e65c00;
+  box-shadow: 0 0 0 0.2rem rgba(255, 106, 0, 0.25);
+  color: #333;
+}
+
+.form-control.premium-input::placeholder {
+  color: #999999;
+}
+
+.glass-panel {
+  background: #ffffff;
+  border-bottom: 2px solid #ff6a00; /* Brand line at bottom of nav */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Cart Animation */
+@keyframes cartBounce {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.3) rotate(-10deg); color: #ff6a00; }
+  70% { transform: scale(0.9) rotate(10deg); color: #ff6a00; }
+  100% { transform: scale(1); }
+}
+
+.cart-bounce {
+  animation: cartBounce 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: inline-block;
+}
+
+/* Add to Cart Custom Action Button */
+.btn-cart-action {
+  background: #ff6a00;
+  border: 1px solid #ff6a00;
+  color: white;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border-radius: 20px;
+}
+
+.btn-cart-action:hover,
+.btn-cart-action:focus,
+.btn-cart-action:active {
+  background: #e65c00;
+  border-color: #e65c00;
+  color: white !important;
 }

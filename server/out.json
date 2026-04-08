@@ -1,0 +1,112 @@
+{
+  "schema": [
+    {
+      "column_name": "id",
+      "data_type": "integer"
+    },
+    {
+      "column_name": "description",
+      "data_type": "text"
+    },
+    {
+      "column_name": "brand",
+      "data_type": "text"
+    },
+    {
+      "column_name": "address",
+      "data_type": "text"
+    },
+    {
+      "column_name": "price",
+      "data_type": "numeric"
+    },
+    {
+      "column_name": "product_name",
+      "data_type": "character varying"
+    }
+  ],
+  "data_details": [
+    {
+      "id": 15,
+      "description": "Discover the exceptional quality and innovative design of the Wooden Bathroom Sink With Mirror. Carefully crafted to meet your everyday needs, this outstanding product combines premium materials with cutting-edge functionality. Whether you are seeking reliability, aesthetic appeal, or long-lasting durability, it truly delivers on all fronts. The meticulous attention to detail ensures a superior user experience, making it a perfect addition to your lifestyle. Designed for those who appreciate excellence, it stands out as a reliable companion for various occasions. Enjoy the seamless blend of comfort and performance that sets a new standard in its category. Invest in this remarkable item today and experience the difference it brings to your routine. It also serves as a wonderful gift for friends and family, reflecting thoughtful consideration and uncompromising taste.",
+      "brand": "Wooden",
+      "address": "321 Elm Street, Star City, CA",
+      "price": "63999",
+      "product_name": "Wooden Bathroom Sink With Mirror"
+    },
+    {
+      "id": 27,
+      "description": "Discover the exceptional quality and innovative design of the Honey Jar. Carefully crafted to meet your everyday needs, this outstanding product combines premium materials with cutting-edge functionality. Whether you are seeking reliability, aesthetic appeal, or long-lasting durability, it truly delivers on all fronts. The meticulous attention to detail ensures a superior user experience, making it a perfect addition to your lifestyle. Designed for those who appreciate excellence, it stands out as a reliable companion for various occasions. Enjoy the seamless blend of comfort and performance that sets a new standard in its category. Invest in this remarkable item today and experience the difference it brings to your routine. It also serves as a wonderful gift for friends and family, reflecting thoughtful consideration and uncompromising taste.",
+      "brand": "Honey",
+      "address": "654 Maple Drive, Central City, OH",
+      "price": "559",
+      "product_name": "Honey Jar"
+    },
+    {
+      "id": 41,
+      "description": "Discover the exceptional quality and innovative design of the Tissue Paper Box. Carefully crafted to meet your everyday needs, this outstanding product combines premium materials with cutting-edge functionality. Whether you are seeking reliability, aesthetic appeal, or long-lasting durability, it truly delivers on all fronts. The meticulous attention to detail ensures a superior user experience, making it a perfect addition to your lifestyle. Designed for those who appreciate excellence, it stands out as a reliable companion for various occasions. Enjoy the seamless blend of comfort and performance that sets a new standard in its category. Invest in this remarkable item today and experience the difference it brings to your routine. It also serves as a wonderful gift for friends and family, reflecting thoughtful consideration and uncompromising taste.",
+      "brand": "Tissue",
+      "address": "987 Cedar Blvd, Coast City, FL",
+      "price": "199",
+      "product_name": "Tissue Paper Box"
+    },
+    {
+      "id": 53,
+      "description": "Discover the exceptional quality and innovative design of the Chopping Board. Carefully crafted to meet your everyday needs, this outstanding product combines premium materials with cutting-edge functionality. Whether you are seeking reliability, aesthetic appeal, or long-lasting durability, it truly delivers on all fronts. The meticulous attention to detail ensures a superior user experience, making it a perfect addition to your lifestyle. Designed for those who appreciate excellence, it stands out as a reliable companion for various occasions. Enjoy the seamless blend of comfort and performance that sets a new standard in its category. Invest in this remarkable item today and experience the difference it brings to your routine. It also serves as a wonderful gift for friends and family, reflecting thoughtful consideration and uncompromising taste.",
+      "brand": "Chopping",
+      "address": "123 Main St, Springfield, IL",
+      "price": "1039",
+      "product_name": "Chopping Board"
+    },
+    {
+      "id": 63,
+      "description": "Discover the exceptional quality and innovative design of the Kitchen Sieve. Carefully crafted to meet your everyday needs, this outstanding product combines premium materials with cutting-edge functionality. Whether you are seeking reliability, aesthetic appeal, or long-lasting durability, it truly delivers on all fronts. The meticulous attention to detail ensures a superior user experience, making it a perfect addition to your lifestyle. Designed for those who appreciate excellence, it stands out as a reliable companion for various occasions. Enjoy the seamless blend of comfort and performance that sets a new standard in its category. Invest in this remarkable item today and experience the difference it brings to your routine. It also serves as a wonderful gift for friends and family, reflecting thoughtful consideration and uncompromising taste.",
+      "brand": "Kitchen",
+      "address": "654 Maple Drive, Central City, OH",
+      "price": "639",
+      "product_name": "Kitchen Sieve"
+    }
+  ],
+  "data_products": [
+    {
+      "id": 1,
+      "name": "Essence Mascara Lash Princess"
+    },
+    {
+      "id": 2,
+      "name": "Eyeshadow Palette with Mirror"
+    },
+    {
+      "id": 3,
+      "name": "Powder Canister"
+    },
+    {
+      "id": 4,
+      "name": "Red Lipstick"
+    },
+    {
+      "id": 5,
+      "name": "Red Nail Polish"
+    },
+    {
+      "id": 6,
+      "name": "Calvin Klein CK One"
+    },
+    {
+      "id": 7,
+      "name": "Chanel Coco Noir Eau De"
+    },
+    {
+      "id": 8,
+      "name": "Dior J'adore"
+    },
+    {
+      "id": 9,
+      "name": "Dolce Shine Eau de"
+    },
+    {
+      "id": 10,
+      "name": "Gucci Bloom Eau de"
+    }
+  ]
+}
