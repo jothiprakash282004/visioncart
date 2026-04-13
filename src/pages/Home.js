@@ -372,7 +372,7 @@ const Home = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [addedIds, setAddedIds] = useState(new Set());
-  const prevQtyRef = useRef({});
+  
 
   /* Navbar glass on scroll */
   useEffect(() => {
