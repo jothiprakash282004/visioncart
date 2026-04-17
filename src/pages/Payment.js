@@ -203,6 +203,44 @@ const Payment = () => {
     }
   };
 
+  const handleCashOnDelivery = async (e) => {
+    addRipple(e);
+    setProcessing(true);
+    setBanner(null);
+    try {
+      const userId = localStorage.getItem("userId") || null;
+      const res = await fetch("http://localhost:5000/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id: userId, total_amount: totalAmount, status: "Placed" }),
+      });
+      if (!res.ok) throw new Error("Order save failed");
+      const orderData = await res.json();
+
+      await fetch("http://localhost:5000/api/payments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          order_id: orderData.id || orderData.order_id || null,
+          user_id: userId, amount: totalAmount, phone,
+          payment_method: "Cash on Delivery", payment_status: "Pending",
+          transaction_id: `COD${Math.floor(Math.random() * 1000000)}`,
+          user_name: name,
+          product_name: cartItems.map(item => item.name).join(", "),
+        }),
+      });
+
+      setPaid(true);
+      sessionStorage.removeItem("checkoutData");
+      setBanner({ type: "success", message: "Order placed successfully! Pay on delivery." });
+      setTimeout(() => navigate("/success"), 1800);
+    } catch {
+      setBanner({ type: "error", message: "Order placement failed. Please try again." });
+    } finally {
+      setProcessing(false);
+    }
+  };
+
   const urgency = timeLeft < 60;
 
   return (
@@ -264,7 +302,7 @@ const Payment = () => {
             <div className="row g-4">
 
               {/* UPI */}
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <div className="pay-card p-4 text-center h-100 d-flex flex-column justify-content-between">
                   <div>
                     <h5 className="fw-bold mb-3" style={{ fontFamily: "'Syne'" }}>Pay via UPI</h5>
@@ -285,7 +323,7 @@ const Payment = () => {
               </div>
 
               {/* Card */}
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <div className="pay-card p-4 text-center h-100 d-flex flex-column justify-content-center">
                   <i className="bi bi-credit-card-2-front mb-3" style={{ fontSize: "3rem", color: "var(--orange)" }}></i>
                   <h5 className="fw-bold mb-3" style={{ fontFamily: "'Syne'" }}>Pay via Card</h5>
@@ -298,6 +336,23 @@ const Payment = () => {
                   >
                     {processing ? <span className="spinner-border spinner-border-sm me-2" role="status" /> : <i className="bi bi-lock-fill me-2"></i>}
                     Pay ₹{totalAmount} via Card
+                  </button>
+                </div>
+              </div>
+
+              {/* Cash on Delivery */}
+              <div className="col-md-4">
+                <div className="pay-card p-4 text-center h-100 d-flex flex-column justify-content-center">
+                  <i className="bi bi-cash mb-3" style={{ fontSize: "3rem", color: "var(--orange)" }}></i>
+                  <h5 className="fw-bold mb-3" style={{ fontFamily: "'Syne'" }}>Cash on Delivery</h5>
+                  <p className="text-muted small mb-4">Pay when you receive your order</p>
+                  <button
+                    className="btn btn-success w-100 rounded-pill fw-semibold mt-auto pay-btn"
+                    disabled={processing}
+                    onClick={(e) => handleCashOnDelivery(e)}
+                  >
+                    {processing ? <span className="spinner-border spinner-border-sm me-2" role="status" /> : <i className="bi bi-truck me-2"></i>}
+                    Place Order (COD)
                   </button>
                 </div>
               </div>

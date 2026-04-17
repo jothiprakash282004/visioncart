@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
+import { useChatbot } from "../context/ChatbotContext";
 
 const STYLES = `
   @keyframes chatFadeIn {
@@ -107,10 +108,10 @@ function Chatbot() {
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
   const messagesEndRef = useRef(null);
   const wrapperRef = useRef(null);
   const { cartItems, addToCart, removeFromCart } = useContext(CartContext);
+  const { isChatbotOpen, setIsChatbotOpen } = useChatbot();
   const navigate = useNavigate();
 
   const scrollToBottom = () => {
@@ -122,12 +123,12 @@ function Chatbot() {
   useEffect(() => {
     function handleClickOutside(event) {
       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-        setIsOpen(false);
+        setIsChatbotOpen(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [setIsChatbotOpen]);
 
   const sendMessage = async () => {
     if (message.trim() === "") return;
@@ -143,14 +144,27 @@ function Chatbot() {
       }));
       const res = await axios.post("http://localhost:5000/chat", { message, history });
 
-      if (res.data.action?.type === "ADD_TO_CART") addToCart(res.data.action.payload);
-      else if (res.data.action?.type === "REMOVE_FROM_CART") removeFromCart(res.data.action.payload.id);
-      else if (res.data.action?.type === "NAVIGATE") {
-        setIsOpen(false);
-        navigate(res.data.action.payload.url);
+      let botReply = res.data.reply;
+      let botAction = res.data.action;
+
+      if (typeof botReply === "string" && botReply.trim().startsWith("{") && !botAction) {
+        try {
+          const parsed = JSON.parse(botReply);
+          botReply = parsed.reply || botReply;
+          botAction = parsed.action || botAction;
+        } catch (error) {
+          // ignore invalid fallback JSON
+        }
       }
 
-      setChat(prev => [...prev, { sender: "bot", text: res.data.reply, action: res.data.action }]);
+      if (botAction?.type === "ADD_TO_CART") addToCart(botAction.payload);
+      else if (botAction?.type === "REMOVE_FROM_CART") removeFromCart(botAction.payload.id);
+      else if (botAction?.type === "NAVIGATE") {
+        setIsChatbotOpen(false);
+        navigate(botAction.payload.url);
+      }
+
+      setChat(prev => [...prev, { sender: "bot", text: botReply, action: botAction }]);
     } catch {
       setChat(prev => [...prev, { sender: "bot", text: "Sorry, I'm having trouble connecting right now." }]);
     } finally {
@@ -165,18 +179,24 @@ function Chatbot() {
         <li className="nav-item">
           <button
             className="btn btn-outline-info rounded-pill px-4 py-2 shadow-sm fw-semibold d-flex align-items-center gap-2 justify-content-center w-100 chatbot-toggle-btn"
-            onClick={() => { if (isOpen) setChat([]); setIsOpen(!isOpen); }}
+            onClick={() => { if (isChatbotOpen) setChat([]); setIsChatbotOpen(!isChatbotOpen); }}
           >
-            <i className={`bi ${isOpen ? "bi-x-lg" : "bi-robot"} fs-5`}></i>
-            <span>{isOpen ? "Close" : "Chat"}</span>
+            <i className={`bi ${isChatbotOpen ? "bi-x-lg" : "bi-robot"} fs-5`}></i>
+            <span>{isChatbotOpen ? "Close" : "Chat"}</span>
           </button>
         </li>
 
         {/* Chat Window */}
-        {isOpen && (
+        {isChatbotOpen && (
           <div
             className="chatbot-window premium-card position-fixed shadow-lg d-flex flex-column"
-            style={{ width: "350px", height: "450px", top: "90px", right: "30px", zIndex: 1050 }}
+            style={{
+              width: "350px",
+              height: "450px",
+              top: "90px",
+              right: "30px",
+              zIndex: 100  // Lower z-index so products appear over chatbot
+            }}
           >
             {/* Header */}
             <div className="bg-light p-3 border-bottom border-secondary d-flex align-items-center justify-content-between">
@@ -185,7 +205,7 @@ function Chatbot() {
               </h5>
               <button
                 className="btn btn-sm btn-link text-dark text-decoration-none shadow-none chat-close-btn"
-                onClick={() => { setChat([]); setIsOpen(false); }}
+                onClick={() => { setChat([]); setIsChatbotOpen(false); }}
               >
                 <i className="bi bi-x-lg fs-6"></i>
               </button>

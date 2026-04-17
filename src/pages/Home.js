@@ -1,5 +1,6 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { CartContext } from "../context/CartContext";
+import { useChatbot } from "../context/ChatbotContext";
 import { useNavigate } from "react-router-dom";
 import LazyImage from "../components/LazyImage";
 
@@ -366,6 +367,7 @@ const SkeletonCard = () => (
 
 const Home = () => {
   const { cartItems, addToCart, increaseQty, decreaseQty } = useContext(CartContext);
+  const { isChatbotOpen } = useChatbot();
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -486,7 +488,10 @@ const Home = () => {
     return (
       <div
         className="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center product-card-wrap"
-        style={{ animationDelay: `${delay}ms` }}
+        style={{ 
+          animationDelay: `${delay}ms`,
+          zIndex: isChatbotOpen ? 200 : 'auto'
+        }}
         key={product.id}
       >
         <div className="w-100">
