@@ -2,7 +2,7 @@
 // SUCCESS PAGE
 // =====================================================================
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const SHARED_STYLES = `
   @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap');
@@ -130,6 +130,8 @@ const CONFETTI_COLORS = ["#ff6a00","#27ae60","#3498db","#f39c12","#e91e63","#9b5
 
 export const Success = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const orderId = location.state?.orderId;
   const confetti = Array.from({ length: 10 }, (_, i) => ({
     id: i,
     color: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
@@ -165,6 +167,12 @@ export const Success = () => {
           <div className="success-title">Payment Successful!</div>
           <p className="success-sub">
             Thank you for your order. It has been placed successfully and will be processed shortly.
+            {orderId && (
+              <>
+                <br /><br />
+                <span style={{ fontSize: '1.1rem', color: '#333' }}>Order ID: <strong>#{orderId}</strong></span>
+              </>
+            )}
           </p>
 
           <div className="order-info-row">

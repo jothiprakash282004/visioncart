@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config({ path: __dirname + '/.env' });
-const pool = require("./db");
+const pool = require("./config/db");
 const { spawn } = require("child_process");
 const path = require("path");
 
@@ -16,7 +16,7 @@ app.use(express.json());
 
 app.post("/chat", async (req, res) => {
   try {
-    const { message } = req.body;
+    const { message, history } = req.body;
 
     if (!message) {
       return res.status(400).json({ error: "Message is required" });
@@ -24,9 +24,10 @@ app.post("/chat", async (req, res) => {
 
     let responseSent = false; // Flag to prevent multiple responses
 
-    // Spawn Python process to call chatbot.py with environment variables
-    const pythonScript = path.join(__dirname, "chatbot.py");
-    const python = spawn("python", [pythonScript, message], {
+    // Spawn Python process to call chatbot.py with message and history
+    const pythonScript = path.join(__dirname, "ai", "chatbot.py");
+    const historyArg = JSON.stringify(history || []);
+    const python = spawn("python", [pythonScript, message, historyArg], {
       cwd: __dirname,
       env: { ...process.env }  // Pass all environment variables including GOOGLE_API_KEY
     });
@@ -143,6 +144,19 @@ app.get("/api/products", async (req, res) => {
     const data = await pool.query("SELECT * FROM products");
     res.json(data.rows);
   } catch {
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+app.get("/api/products/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const data = await pool.query("SELECT * FROM products WHERE id = $1", [id]);
+    if (data.rows.length === 0) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+    res.json(data.rows[0]);
+  } catch (error) {
     res.status(500).json({ error: "Server error" });
   }
 });

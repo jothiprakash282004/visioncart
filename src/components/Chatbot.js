@@ -135,6 +135,23 @@ function Chatbot() {
     const userMessage = { sender: "user", text: message };
     setChat(prev => [...prev, userMessage]);
     setMessage("");
+
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    if (!isLoggedIn) {
+      setChat(prev => [...prev, {
+        sender: "bot",
+        text: "Please log in to use the chat assistant.",
+        action: {
+          type: "NAVIGATE",
+          payload: {
+            url: "/login",
+            text: "Sign In / Log In"
+          }
+        }
+      }]);
+      return;
+    }
+
     setIsLoading(true);
 
     try {

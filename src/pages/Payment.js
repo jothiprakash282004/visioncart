@@ -195,7 +195,7 @@ const Payment = () => {
       setPaid(true);
       sessionStorage.removeItem("checkoutData");
       setBanner({ type: "success", message: `Payment via ${method} confirmed! Redirecting...` });
-      setTimeout(() => navigate("/success"), 1800);
+      setTimeout(() => navigate("/success", { state: { orderId: orderData.id || orderData.order_id } }), 1800);
     } catch {
       setBanner({ type: "error", message: "Payment failed. Please try again." });
     } finally {
@@ -233,7 +233,7 @@ const Payment = () => {
       setPaid(true);
       sessionStorage.removeItem("checkoutData");
       setBanner({ type: "success", message: "Order placed successfully! Pay on delivery." });
-      setTimeout(() => navigate("/success"), 1800);
+      setTimeout(() => navigate("/success", { state: { orderId: orderData.id || orderData.order_id } }), 1800);
     } catch {
       setBanner({ type: "error", message: "Order placement failed. Please try again." });
     } finally {
