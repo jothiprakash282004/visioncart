@@ -7,11 +7,16 @@ const pool = new Pool({
   database: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
   port: process.env.DB_PORT,
+  ssl: { rejectUnauthorized: false }, // Required for Supabase cloud connections
+  connectionTimeoutMillis: 10000,
 });
 
-pool.on("error", (err, client) => {
-  console.error("Unexpected error on idle client", err);
-  process.exit(-1);
+pool.on("connect", () => {
+  console.log("✅ Database connected successfully");
+});
+
+pool.on("error", (err) => {
+  console.error("❌ Unexpected database error:", err.message);
 });
 
 module.exports = pool;
