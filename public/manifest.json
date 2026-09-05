@@ -1,0 +1,15 @@
+{
+  "short_name": "FusionCart",
+  "name": "Fusion Cart E-Commerce App",
+  "icons": [
+    {
+      "src": "title1.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
